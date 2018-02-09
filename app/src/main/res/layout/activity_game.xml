@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical"
+    android:id="@+id/relLayout">
+
+        <ImageButton
+            android:id="@+id/xbutton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@null"
+            android:scaleType="fitXY"
+            app:srcCompat="@drawable/x" />
+
+        <ImageButton
+            android:id="@+id/fbutton"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:background="@null"
+            android:scaleType="fitXY"
+            app:srcCompat="@drawable/f" />
+
+        <ImageButton
+            android:id="@+id/bbutton"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:background="@null"
+            android:scaleType="fitXY"
+            app:srcCompat="@drawable/b" />
+
+        <ImageButton
+            android:id="@+id/mbutton"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:background="@null"
+            android:scaleType="fitXY"
+            app:srcCompat="@drawable/m" />
+
+        <ImageButton
+            android:id="@+id/cbutton"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:background="@null"
+            android:scaleType="fitXY"
+            app:srcCompat="@drawable/c" />
+
+        <ImageButton
+            android:id="@+id/abutton"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:background="@null"
+            android:scaleType="fitXY"
+            app:srcCompat="@drawable/a" />
+
+        <ImageButton
+            android:id="@+id/kbutton"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:background="@null"
+            android:scaleType="fitXY"
+            app:srcCompat="@drawable/k" />
+
+        <ImageButton
+            android:id="@+id/ebutton"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:background="@null"
+            android:scaleType="fitXY"
+            app:srcCompat="@drawable/e" />
+
+        <ImageButton
+            android:id="@+id/hbutton"
+            style="@android:style/Widget.DeviceDefault.ImageButton"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:background="@null"
+            android:scaleType="fitXY"
+            app:srcCompat="@drawable/h" />
+
+        <ImageButton
+            android:id="@+id/buttonPaso"
+            android:layout_width="100dp"
+            android:layout_height="50dp"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="0dp"
+            android:layout_marginTop="1100dp"
+            android:background="@drawable/unico_glow"
+            android:padding="5dp"
+            android:scaleType="fitCenter"
+            app:srcCompat="@drawable/paso1" />
+
+        <Button
+            android:id="@+id/buttonConfig"
+            style="@style/Widget.AppCompat.Button.Borderless"
+            android:layout_width="75dp"
+            android:layout_height="75dp"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:background="@drawable/ajustesn01"
+            android:text="" />
+
+</RelativeLayout>
