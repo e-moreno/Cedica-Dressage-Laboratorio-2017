@@ -45,6 +45,8 @@ public class GameView extends SurfaceView implements Runnable {
     private Bitmap background;
     private Bitmap pista;
     private Bitmap caballo;
+    private Bitmap[] caballo_norte = new Bitmap[21];
+    private Bitmap[][] caballos = new Bitmap[4][21];
 
     private int screenX; //ancho de pantalla
     private int screenY; //alto de pantalla
@@ -91,6 +93,15 @@ public class GameView extends SurfaceView implements Runnable {
         background = BitmapFactory.decodeResource(getResources(), R.drawable.fondo);
         background = Bitmap.createScaledBitmap(background, screenX, screenY, true);
 
+        //Caballos index, Frame index
+        int cindex = 0,findex = 0;
+        for(Caballos c : Caballos.values()){
+            findex = 0;
+            for(int id : c.getIds()){
+                caballos[cindex][findex++] = BitmapFactory.decodeResource(getResources(),id);
+            }
+            cindex++;
+        }
 
         //Imagen de pista
         MARGEN_IZQUIERDO_DERECHO_PISTA = screenX / 20;
@@ -170,7 +181,7 @@ public class GameView extends SurfaceView implements Runnable {
             }
 
             this.dibujarCaballo(canvas, caballo, distanciaRecorridaTramoActual, pathMeasureTramoActual, matrix, anchoPista, altoPista, frame);
-
+            frame = (frame + 1) % 21;
             if (distanciaRecorridaTramoActual < longitudTramoActual) {
                 distanciaRecorridaTramoActual += 10;
                 if (distanciaRecorridaTramoActual > longitudTramoActual) {// Si supera el punto de llegada, lo seteo al extremo del path
@@ -186,7 +197,8 @@ public class GameView extends SurfaceView implements Runnable {
     }
 
 
-    private void dibujarCaballo(Canvas canvas, Bitmap caballo, float distanciaRecorrida, PathMeasure pathMeasure, Matrix matrix, int anchoPista, int altoPista, int frame) {
+    private void dibujarCaballo(Canvas canvas, Bitmap caballo, float distanciaRecorrida, PathMeasure pathMeasure, Matrix matrix,
+                                int anchoPista, int altoPista, int frame) {
         Bitmap caballoRedimiensionado = null;
         int caballo_offsetX;
         int caballo_offsetY;
@@ -201,10 +213,11 @@ public class GameView extends SurfaceView implements Runnable {
             x = pos[0];
             y = pos[1];
             float degrees = (float) (Math.atan2(tan[1], tan[0]) * 180.0 / Math.PI) + 90; //angulo del tramo
+            caballo = getHorseBitmap(degrees,frame);
             caballoRedimiensionado = redimensionarCaballo(caballo, anchoPista, altoPista, altoPista - (y - MARGEN_ARRIBA_PISTA));
             caballo_offsetX = caballoRedimiensionado.getWidth() / 2;
             caballo_offsetY = caballoRedimiensionado.getHeight() / 2;
-            matrix.postRotate(degrees/* + 90*/, caballo_offsetX, caballo_offsetY);
+            //matrix.postRotate(degrees/* + 90*/, caballo_offsetX, caballo_offsetY);
             matrix.postTranslate(x - caballo_offsetX, y - caballo_offsetY);
             canvas.drawBitmap(caballoRedimiensionado, matrix, null);
         }
@@ -212,10 +225,25 @@ public class GameView extends SurfaceView implements Runnable {
 
     }
 
+    private Bitmap getHorseBitmap(float degrees, int frame){
+        //TODO agregar case de angulos
+        int horseIndex = 0;
+        if((degrees >= -70.0f) && (degrees < 70.0f)){
+            horseIndex = 0;
+        }else if(((degrees >= 70.0f) && (degrees < 180.0f))){
+            horseIndex = 2;
+        }else if((degrees >= 180.0f) && (degrees < 270.0f)){
+            horseIndex = 1;
+        }else if((degrees >= 270.0f) && (degrees <= 360.0f) || ((degrees < -70.0f) && (degrees > -140.0f))){
+            horseIndex = 3;
+        }
+        return caballos[horseIndex][frame];
+    }
     /*
         Redimensiona el caballo de acuerdo a la profundidad en la que se encuentra
      */
-    private Bitmap redimensionarCaballo(Bitmap caballo, int anchoPista, int altoPista, float profundidad) { //profundidad va de 0 a alto de pista. 0 es menos profundo
+    private Bitmap redimensionarCaballo(Bitmap caballo, int anchoPista, int altoPista, float profundidad) {
+        //profundidad va de 0 a alto de pista. 0 es menos profundo
         float incrementoPorProfundidad = (profundidad) * 1 / altoPista;
         float divisor = 2 + incrementoPorProfundidad;
         int anchoCaballo = (int) (anchoPista / divisor);
