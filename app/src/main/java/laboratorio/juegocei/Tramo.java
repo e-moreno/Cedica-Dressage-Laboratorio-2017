@@ -21,34 +21,34 @@ public enum Tramo {
                     new Point(708,282), new Point(561,231),
                     new Point(432,225), new Point(300,249),
                     new Point(201,318), new Point(126,429),
-                    new Point(18,1191), new Point(939,1191),
-                    new Point(894,852)
+                    new Point(18,1140), new Point(939,1140),
+                    new Point(894,Letra.F.getY())
             }
     ),
     TERCER_TRAMO(
             new Point[]{
-                    new Point(906,888), new Point(99,540),
+                    new Point(906,Letra.F.getY()), new Point(99,540),
                     new Point(171,9),new Point(483,6)
             }
     ),
     CUARTO_TRAMO(new Point[]{
             new Point(478,4), new Point(796,6),
-            new Point(850,470), new Point(820,598),
-            new Point(758,686), new Point(758,686),
-            new Point(658,738), new Point(524,760),
-            new Point(404,754),new Point(286,722),
-            new Point(208,662), new Point(140,564),
-            new Point(114,434), new Point(146,338),
-            new Point(200,256),new Point(280,184),
-            new Point(384,146),new Point(486,136),
-            new Point(572,144), new Point(652,168),
-            new Point(652,170), new Point(652,172),
-            new Point(738,234), new Point(780,278),
-            new Point(820,368), new Point(844,466)
+            new Point(850,570), new Point(820,698),
+            new Point(758,786), new Point(758,786),
+            new Point(658,838), new Point(524,860),
+            new Point(404,854),new Point(286,822),
+            new Point(208,762), new Point(140,664),
+            new Point(114,534), new Point(146,438),
+            new Point(200,356),new Point(280,284),
+            new Point(384,246),new Point(486,236),
+            new Point(572,244), new Point(652,268),
+            new Point(652,270), new Point(652,272),
+            new Point(738,334), new Point(780,378),
+            new Point(820,468), new Point(844,566)
     }),
     QUINTO_TRAMO(new Point[]{
-            new Point(864,603),new Point(939,1200),
-            new Point(489,1203),new Point(471,606)
+            new Point(864,603),new Point(939,1140),
+            new Point(489,1140),new Point(471,606)
     });
 
     private Point[] recorrido;

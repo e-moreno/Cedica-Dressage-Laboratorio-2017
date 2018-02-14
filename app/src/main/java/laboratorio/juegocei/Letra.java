@@ -11,12 +11,12 @@ public enum Letra {
     H(60,150,R.id.hbutton),
     E(30,543,R.id.ebutton),
     K(0,934,R.id.kbutton),
-    A(440,1211,R.id.abutton),
+    A(430,1211,R.id.abutton),
     F(905,934,R.id.fbutton),
     B(875,543,R.id.bbutton),
     M(845,150,R.id.mbutton),
-    C(440,-10,R.id.cbutton),
-    X(440,500,R.id.xbutton);
+    C(430,-30,R.id.cbutton),
+    X(430,500,R.id.xbutton);
 
     private Point position;
     int id;

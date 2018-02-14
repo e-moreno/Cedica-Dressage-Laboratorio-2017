@@ -1,5 +1,8 @@
 package laboratorio.juegocei;
 
+
+import android.support.v4.app.DialogFragment;
+import android.support.v4.app.FragmentManager;
 import android.graphics.Point;
 import android.graphics.drawable.AnimationDrawable;
 import android.media.Image;
@@ -20,7 +23,6 @@ public class GameActivity extends AppCompatActivity {
     ImageView img;
 
     private void setButtons(){
-        //Solo por esto merezco un 10
         for(Letra l : Letra.values()){
             ImageButton button = (ImageButton) findViewById(l.id);
             button.setX(gameView.getXConvertido(gameView.anchoPista,l.getX()));
@@ -47,17 +49,14 @@ public class GameActivity extends AppCompatActivity {
 
         Button config=(Button) findViewById(R.id.buttonConfig);
         ImageButton paso=(ImageButton) findViewById(R.id.buttonPaso);
+        config=(Button) findViewById(R.id.buttonConfig);
         config.setOnClickListener(new View.OnClickListener() {
-
             @Override
             public void onClick(View arg0) {
-
-                Toast.makeText(getApplicationContext(),
-                        "Botón Configuración presionado", Toast.LENGTH_SHORT).show();
-
+                DialogFragment newFragment = new PauseDialog();
+                newFragment.show(getSupportFragmentManager(),"pause");
             }
         });
-
         paso.setOnClickListener(new View.OnClickListener() {
 
             @Override

@@ -17,9 +17,11 @@ import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.graphics.BitmapFactory;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-
+import android.widget.Toast;
+import android.app.DialogFragment;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -41,12 +43,11 @@ public class GameView extends SurfaceView implements Runnable {
     private Paint paint;
     private Canvas canvas;
     private SurfaceHolder surfaceHolder;
-
     private Bitmap background;
     private Bitmap pista;
     private Bitmap caballo;
-    private Bitmap[] caballo_norte = new Bitmap[21];
-    private Bitmap[][] caballos = new Bitmap[4][21];
+    private Bitmap ultimoCaballo = null;
+    //private Bitmap[][] caballos = new Bitmap[8][21];
 
     private int screenX; //ancho de pantalla
     private int screenY; //alto de pantalla
@@ -63,7 +64,7 @@ public class GameView extends SurfaceView implements Runnable {
     private float distanciaRecorridaTramoActual;
     Path path = null;
     private boolean firsttime = true;
-
+    private Button config;
     private Matrix matrix = new Matrix();
 
     int frame = 0;
@@ -92,16 +93,16 @@ public class GameView extends SurfaceView implements Runnable {
         //Imagen de fondo
         background = BitmapFactory.decodeResource(getResources(), R.drawable.fondo);
         background = Bitmap.createScaledBitmap(background, screenX, screenY, true);
-
+        /*
         //Caballos index, Frame index
-        int cindex = 0,findex = 0;
+        int cindex = 0,findex;
         for(Caballos c : Caballos.values()){
             findex = 0;
             for(int id : c.getIds()){
                 caballos[cindex][findex++] = BitmapFactory.decodeResource(getResources(),id);
             }
             cindex++;
-        }
+        }*/
 
         //Imagen de pista
         MARGEN_IZQUIERDO_DERECHO_PISTA = screenX / 20;
@@ -220,24 +221,39 @@ public class GameView extends SurfaceView implements Runnable {
             //matrix.postRotate(degrees/* + 90*/, caballo_offsetX, caballo_offsetY);
             matrix.postTranslate(x - caballo_offsetX, y - caballo_offsetY);
             canvas.drawBitmap(caballoRedimiensionado, matrix, null);
+            caballo = null;
         }
-
-
     }
 
     private Bitmap getHorseBitmap(float degrees, int frame){
-        //TODO agregar case de angulos
-        int horseIndex = 0;
-        if((degrees >= -70.0f) && (degrees < 70.0f)){
-            horseIndex = 0;
-        }else if(((degrees >= 70.0f) && (degrees < 180.0f))){
-            horseIndex = 2;
-        }else if((degrees >= 180.0f) && (degrees < 270.0f)){
-            horseIndex = 1;
-        }else if((degrees >= 270.0f) && (degrees <= 360.0f) || ((degrees < -70.0f) && (degrees > -140.0f))){
-            horseIndex = 3;
+        Caballos caballo = null;
+        if(ultimoCaballo != null){
+            ultimoCaballo.recycle();
+            ultimoCaballo = null;
         }
-        return caballos[horseIndex][frame];
+        if(degrees < 0){
+            degrees = degrees + 360;
+        }
+        if(((degrees >= 337.5f) && (degrees <= 360.0f)) || ((degrees >= 0)&&(degrees < 22.5))){
+            caballo = Caballos.CABALLO_NORTE;
+        }else if((degrees >= 22.5f) && (degrees < 67.5f)){
+            caballo = Caballos.CABALLO_NORESTE;
+        }else if((degrees >= 67.5f) && (degrees < 112.5f)){
+            caballo = Caballos.CABALLO_ESTE;
+        }else if((degrees > 112.5f) && (degrees < 157.5f)){
+            caballo = Caballos.CABALLO_SURESTE;
+        }else if((degrees >= 157.5f) && (degrees < 202.5f)){
+           caballo = Caballos.CABALLO_SUR;
+        }else if((degrees >= 157.5f) && (degrees < 247.5f)){
+            caballo = Caballos.CABALLO_SUROESTE;
+        }else if((degrees >= 247.5f) && (degrees <= 292.5f)){
+            caballo = Caballos.CABALLO_OESTE;
+        }else if((degrees >= 292.5f) && (degrees < 337.5f)){
+            caballo = Caballos.CABALLO_NOROESTE;
+        }
+        ultimoCaballo = BitmapFactory.decodeResource(getResources(), caballo.getIds()[frame]);
+
+        return ultimoCaballo;
     }
     /*
         Redimensiona el caballo de acuerdo a la profundidad en la que se encuentra
@@ -275,7 +291,6 @@ public class GameView extends SurfaceView implements Runnable {
     }
 
     public void resume() {
-
         playing = true;
         gameThread = new Thread(this);
         gameThread.start();
